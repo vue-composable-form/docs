@@ -14,6 +14,37 @@ const defaultSidebar: DefaultTheme.Sidebar = [
       },
     ],
   },
+  {
+    text: 'useForm',
+    items: [
+      {
+        text: 'useForm',
+        link: '../useForm/useForm',
+      },
+      {
+        text: 'register',
+        link: '../register',
+      }
+    ]
+  },
+  {
+    text: 'useFormState',
+    items: [
+      {
+        text: 'useFormState',
+        link: '../useFormState/useFormState'
+      },
+    ]
+  },
+  {
+    text: 'useFiledArray',
+    items: [
+      {
+        text: 'useFieldArray',
+        link: '../useFiledArray/useFiledArray'
+      }
+    ]
+  }
 ]
 
 const nav = [
