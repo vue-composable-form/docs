@@ -35,7 +35,7 @@ const [firstNameField, firstNameRef] = register('firstname')
 ```
 
 ## v-form
-Maybe you will see, it's very troublesome, it's Because of the mechanism of vue, but we provide a directive `v-form` that can help you easy to use it
+Maybe you will say, it's very troublesome, it's because of the mechanism of vue, but we provide a directive `v-form` that can help you easy to use it
 ::: warning
 directive `v-form` can work because we write a compiler to transform it
 :::
