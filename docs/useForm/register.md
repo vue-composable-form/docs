@@ -26,7 +26,7 @@ const [usernameField, usernameRef] = register('username')
 </template>
 ```
 ::: tip
-You may find it troublesome to bind manually, if you want to bind automatically, please see **virtual directive**: [v-form](/v-form/v-form)
+You may find it troublesome to bind manually, if you want to bind automatically, please see **virtual directive**: [v-form](../v-form/v-form)
 :::
 ```html
 <input v-form="register('username')" />
@@ -68,6 +68,62 @@ register('username', {
   maxLength: {
     value: 20,
     message: 'The maximum length of username is 20!'
+  }
+})
+```
+
+## minLength
+
+The minimum length of the value to accept for this input.
+
+- **Type**
+```ts
+type minLength = number | { value: number; message: string }
+```
+
+- **Usage**
+```ts
+register('username', {
+  minLength: {
+    value: 3,
+    message: 'The minimumlength of username is 3!'
+  }
+})
+```
+
+## max
+
+The maximum value to accept for this input.
+
+- **Type**
+```ts
+type max = number | { value: number; message: string }
+```
+
+- **Usage**
+```ts
+register('count', {
+  max: {
+    value: 150,
+    message: 'The maximum value of count is 150!'
+  }
+})
+```
+## min
+
+The minimum value to accept for this input.
+
+- **Type**
+```ts
+type maxLength = number | { value: number; message: string }
+```
+
+- **Usage**
+```ts
+register('username', {
+  mixLength: {
+    value: 3,
+    message: 'The minimumlength of username is 3!'
   }
 })
 ```
