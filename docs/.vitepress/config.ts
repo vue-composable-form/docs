@@ -1,16 +1,23 @@
-import {DefaultTheme, defineConfig} from "vitepress"
+import { resolve } from 'path'
+import type { DefaultTheme } from 'vitepress'
+import { defineConfig } from 'vitepress'
+import { generateFileSidebar } from './file-sidebar'
+
+const r = (p: string) => resolve(__dirname, p)
+
+generateFileSidebar(r('../useForm'))
 
 const defaultSidebar: DefaultTheme.Sidebar = [
   {
-    text: "Introduction",
+    text: 'Introduction',
     items: [
       {
         text: 'what is vue-use-form',
-        link: '../what-is'
+        link: '../what-is',
       },
       {
-        text: "Getting Started",
-        link: "../getting-started",
+        text: 'Getting Started',
+        link: '../getting-started',
       },
     ],
   },
@@ -23,28 +30,37 @@ const defaultSidebar: DefaultTheme.Sidebar = [
       },
       {
         text: 'register',
-        link: '../register',
-      }
-    ]
+        link: '../useForm/register',
+      },
+    ],
   },
   {
     text: 'useFormState',
     items: [
       {
         text: 'useFormState',
-        link: '../useFormState/useFormState'
+        link: '../useFormState/useFormState',
       },
-    ]
+    ],
   },
   {
     text: 'useFiledArray',
     items: [
       {
         text: 'useFieldArray',
-        link: '../useFiledArray/useFiledArray'
-      }
-    ]
-  }
+        link: '../useFiledArray/useFiledArray',
+      },
+    ],
+  },
+  {
+    text: 'v-form',
+    items: [
+      {
+        text: 'v-form',
+        link: '../v-form/v-form',
+      },
+    ],
+  },
 ]
 
 const nav = [
@@ -52,30 +68,30 @@ const nav = [
 ]
 
 export default defineConfig({
-  title: "vue-use-form",
-  description: "composition api form validator for vue",
+  title: 'vue-use-form',
+  description: 'composition api form validator for vue',
   // appearance: false,
   lastUpdated: true,
   themeConfig: {
     sidebar: {
-      "/": defaultSidebar,
+      '/': defaultSidebar,
     },
     nav,
     socialLinks: [
-      { icon: "github", link: "https://github.com/vue-use-form/vue-use-form" },
+      { icon: 'github', link: 'https://github.com/vue-use-form/vue-use-form' },
     ],
     footer: {
-      copyright: "Copyright © 2022-present webfansplz",
+      copyright: 'Copyright © 2022-present webfansplz',
     },
     editLink: {
-      pattern: "https://github.com/vue-use-form/vue-use-form",
-      text: "Edit this page on Gitlab",
+      pattern: 'https://github.com/vue-use-form/vue-use-form',
+      text: 'Edit this page on Gitlab',
     },
-    lastUpdatedText: "Last Updated",
+    lastUpdatedText: 'Last Updated',
     localeLinks: {
-      text: "English",
+      text: 'English',
       items: [
-        { text: "简体中文", link: "https://netlify.app" },
+        { text: '简体中文', link: 'https://netlify.app' },
       ],
     },
   },

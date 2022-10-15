@@ -5,22 +5,22 @@ useForm is a custom hook for managing forms with ease. It takes one object as op
 ```ts
 declare function useForm<TFieldValues extends FieldValues = FieldValues>(
   props?: Partial<UseFormProps<TFieldValues>>
-): UseFormReturn<TFieldValues>;
+): UseFormReturn<TFieldValues>
 ```
 
-## Options
+- **Options**
 
 ```ts
 interface UseFormProps<TFieldValues extends object> {
-    mode: Mode;
-    reValidateMode: Exclude<Mode, 'onTouched' | 'all'>;
-    defaultValues: DefaultValues<TFieldValues>;
-    resolver: Resolver<TFieldValues>;
-    shouldFocusError: boolean;
-    shouldUnregister: boolean;
-    shouldUseNativeValidation: boolean;
-    criteriaMode: CriteriaMode;
-    delayError: number;
+  mode: Mode
+  reValidateMode: Exclude<Mode, 'onTouched' | 'all'>
+  defaultValues: DefaultValues<TFieldValues>
+  resolver: Resolver<TFieldValues>
+  shouldFocusError: boolean
+  shouldUnregister: boolean
+  shouldUseNativeValidation: boolean
+  criteriaMode: CriteriaMode
+  delayError: number
 }
 ```
 
@@ -28,10 +28,10 @@ interface UseFormProps<TFieldValues extends object> {
 
 It decide when to trigger validate for
 
-### Type
+- **Type**
 
 ```ts
-type Mode = 'onSubmit' | 'onBlur' | 'onChange' | 'onTouched' | 'all';
+type Mode = 'onSubmit' | 'onBlur' | 'onChange' | 'onTouched' | 'all'
 ```
 
 ### Details
@@ -50,3 +50,103 @@ type Mode = 'onSubmit' | 'onBlur' | 'onChange' | 'onTouched' | 'all';
 In some UI framework, they may not provide `dom` in the instance which get from `ref`, so i recommend you to use `onChange` | `all`
 :::
 
+## reValidateMode
+This option allows you to configure validation strategy when inputs with errors get re-validated after a user submits the form (onSubmit event). By default, validation is triggered during the input change event.
+
+- **Type**
+```ts
+const reValidateMode: 'onSubmit' | 'onBlur' | 'onChange' = 'onSubmit'
+```
+
+## defaultValues 
+The defaultValues for inputs are used as the initial value when a component is first rendered, before a user interacts with it. It is encouraged that you set defaultValues for all inputs to non-undefined values such as the empty string or null.
+- **Type**
+```ts
+const defaultValues: Record<string, any> = {}
+```
+
+- **Usage**
+```vue
+<script setup lang="ts">
+interface Inputs {
+  username: string
+}
+
+const {
+  register
+} = useForm<Inputs>({
+  defaultValues: {
+    username: 'Alice'
+  }
+})
+</script>
+
+<template>
+  <input v-form="register('username')">
+</template>
+```
+
+## shouldFocusError
+When set to true (default) and the user submits a form that fails the validation, it will **try to** set focus on the first field with an error.
+
+- **try to**
+::: tip
+In some UI framework, they may not provide `dom` in the instance which get from `ref`, therefore, for some UI components framework, it may not be able to focus correctly
+:::
+
+- **Type**
+```ts
+const shouldFocusError = true
+```
+
+## criteriaMode
+- When set to firstError (default), only the first error from each field will be gathered.
+
+- When set to all, all errors from each field will be gathered.
+
+::: tip
+If you use [resolver](#resolver), this will not take effect. 
+:::
+
+- **Type**
+```ts
+const criteriaMode: 'all' | 'firstError' = 'firstError'
+```
+
+## resolver
+
+This function allows you to use any external validation library such as [yup](https://github.com/jquense/yup), [class-validator](https://github.com/typestack/class-validator)
+
+
+- **example**
+
+```vue
+<script lang="ts" setup>
+import { useForm } from 'vue-use-form'
+import * as yup from 'yup'
+import { useYupResolver } from '@vue-use-form/yup'
+
+const schema = yup.object().shape({
+  username: yup.string().required(),
+  age: yup.number().required().positive().integer(),
+  email: yup.string().email(),
+})
+
+const {
+  register,
+  formState: { errors },
+} = useForm<{
+  username: string
+  email: string
+  age: number
+}>({
+  resolver: useYupResolver(schema),
+})
+</script>
+
+<template>
+  <input v-form="register('username')">
+  <input v-form="register('email')">
+  <input v-form="register('age')">
+</template>
+```
