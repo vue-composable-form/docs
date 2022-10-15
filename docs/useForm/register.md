@@ -115,15 +115,110 @@ The minimum value to accept for this input.
 
 - **Type**
 ```ts
-type maxLength = number | { value: number; message: string }
+type min = number | { value: number; message: string }
 ```
 
 - **Usage**
 ```ts
 register('username', {
-  mixLength: {
+  min: {
     value: 3,
     message: 'The minimumlength of username is 3!'
   }
 })
 ```
+
+## pattern
+
+The regex pattern for the input.
+- **Type**
+```ts
+type pattern = RegExp | { value: RegExp; message: string }
+```
+
+- **Usage**
+```ts
+register('test', {
+  pattern: /[A-Za-z]{3}/
+})
+```
+
+## validate
+You can pass a callback function as the argument to validate, or you can pass an object of callback functions to validate all of them. This function will be executed on its own without depending on other validation rules included in the required attribute.
+- **Type**
+```ts
+type ValidateFn = (val: unknown) =>
+(boolean | string) | Promise<boolean | string>
+
+type validate = ValidateFn | Record<string, ValidateFn>
+```
+
+- **Usage**
+```ts
+register('test', {
+  validate: value => value === '1'
+})
+// object of callback functions
+register('test1', {
+  validate: {
+    positive: v => parseInt(v) > 0,
+    lessThanTen: v => parseInt(v) < 10,
+    checkUrl: async () => await fetch(),
+  }
+})
+```
+
+## valueAsNumber
+Returns a Number normally. If something goes wrong `NaN` will be returned.
+- **Type**
+```ts
+const valueAsNumber: boolean = false
+```
+
+- **Usage**
+```vue
+<template>
+  <input
+    v-form="register('test', {
+      valueAsNumber: true,
+    })"
+    type="number"
+  >
+</template>
+```
+
+## valueAsDate
+Returns a Date object normally. If something goes wrong `Invalid Date` will be returned.
+
+- **Type**
+```ts
+const valueAsDate: boolean = false
+```
+
+- **Usage**
+```vue
+<template>
+  <input
+    v-form="register('test', {
+      valueAsDate: true,
+    })"
+    type="date"
+  >
+</template>
+```
+
+## setValueAs
+Return input value by running through the function.
+
+- **Type**
+```ts
+type SetValueAs = (value: any) => any
+```
+
+- **Usage**
+```ts
+register('test', {
+  setValueAs: v => parseInt(v)
+})
+```
+
