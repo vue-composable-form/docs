@@ -1,3 +1,7 @@
+---
+title: useForm
+---
+
 # useForm
 
 useForm is a custom hook for managing forms with ease. It takes one object as optional argument.
@@ -82,7 +86,7 @@ const {
 </script>
 
 <template>
-  <input v-form="register('username')">
+  <input :="register('username')">
 </template>
 ```
 
@@ -145,8 +149,8 @@ const {
 </script>
 
 <template>
-  <input v-form="register('username')">
-  <input v-form="register('email')">
-  <input v-form="register('age')">
+  <input :="register('username')">
+  <input :="register('email')">
+  <input :="register('age')">
 </template>
 ```

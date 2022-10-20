@@ -3,8 +3,13 @@ This method allows you to register **field** and **ref** to bind components for 
 - **Type**
 
 ```ts
-type RegisterFn<T extends FiledValues> =
-(name: keyof T, options: RegisterOptions<T>) => [ComponentRef, FieldRef]
+type RegisterFn<T extends FiledValues, V = T[typeof name]> =
+(name: keyof T, options: RegisterOptions<T>) => {
+  [options.vModelBinding]: V,
+  [`onUpdate:${options.vModelBinding}`]: (input: V) => void
+  value?: V
+  onInput?: (e: InputEvent) => void
+}
 ```
 
 - **Usage**
@@ -17,21 +22,12 @@ const {
   register,
   formState: { errors }
 } = useForm<{ username: number }>()
-
-const [usernameField, usernameRef] = register('username')
 </script>
 
 <template>
-  <input ref="usernameRef" v-model="usernameField">
+  <input :="register('username')">
 </template>
 ```
-::: tip
-You may find it troublesome to bind manually, if you want to bind automatically, please see **virtual directive**: [v-form](../v-form/v-form)
-:::
-```html
-<input v-form="register('username')" />
-```
-
 
 ## required
 A Boolean which, if true, indicates that the input must have a value before the form can be submitted. You can assign a string to return an error message in the errors object.
@@ -43,10 +39,10 @@ type Required = string | boolean
 ```
 - **Usage**
 
-```ts
-register('username', {
+```html
+<input :="register('username', {
   required: true
-})
+})"/>
 ```
 
 ## maxLength
@@ -120,6 +116,12 @@ type min = number | { value: number; message: string }
 
 - **Usage**
 ```ts
+// number
+register('username', {
+  min: 3
+})
+
+// { value: number; message: string }
 register('username', {
   min: {
     value: 3,
@@ -138,10 +140,39 @@ type pattern = RegExp | { value: RegExp; message: string }
 
 - **Usage**
 ```ts
+// RegExp
 register('test', {
   pattern: /[A-Za-z]{3}/
 })
+
+// { value: RegExp; message: string }
+register('test', {
+  pattern: {
+    value: /[A-Za-z]{3}/,
+    message: 'The max length of test field is 3.'
+  }
+})
 ```
+
+## disabled
+Set disabled to true will disable input control.
+
+- **Type**
+```ts
+const disabled: boolean = false
+```
+
+- **Usage**
+```ts
+register('disabled', {
+  disabled: true
+})
+```
+
+- **Detail**
+
+The `disabled` attribute only takes effect by setting the attribute of `input/select/textarea` like `setAttribute/removeAttribute` and not updating its inputValue.
+
 
 ## validate
 You can pass a callback function as the argument to validate, or you can pass an object of callback functions to validate all of them. This function will be executed on its own without depending on other validation rules included in the required attribute.
@@ -179,7 +210,7 @@ const valueAsNumber: boolean = false
 ```vue
 <template>
   <input
-    v-form="register('test', {
+    :="register('test', {
       valueAsNumber: true,
     })"
     type="number"
@@ -199,7 +230,7 @@ const valueAsDate: boolean = false
 ```vue
 <template>
   <input
-    v-form="register('test', {
+    :="register('test', {
       valueAsDate: true,
     })"
     type="date"
@@ -220,5 +251,54 @@ type SetValueAs = (value: any) => any
 register('test', {
   setValueAs: v => parseInt(v)
 })
+```
+
+
+## Examples
+Try it on [playground](https://vue-use-form-play.netlify.app/#eNqtU8GO2jAQ/ZVRLgGJOFKPUViVXXVPq15W6qXpwSQDuE1s13ZoEeLfO3YSSIEuQt2bNfPem5k3nn0kGq2MSxqu2XerZJRF+0ICFH3CFlEGIeJj2xaT1mKyUqbxiSLaOKdtlqbjTKJrvmMSXS1WO8a1/itLZYpoNlK8U4iZVjrRIEPbJEujflk0F5opBbdoEoOyQoPmnhpn1Is6vsyhkIdoFi20ZiRGpuW2NEI7sOha/VDIzj3YA9V5pjJwgJVRDcTj2nEhC1kqaT3Q4FpYh2YGGy6rGl/bZSMc8eaDxiTsocIVb2v3hdct2uNuVsJY95k3mEEc907U/CJUcodrZXbj0AbLH0v1O4Ov3/qQ4ZVQHhJGpeBheupUyb6zOUwq7vgU5g9dFz6vamS1WncZIp5Yn4xRxpPQP+x1Wp8LxDztPCU3c4cN7ckhvQFy7x18tKENpg1uUbo5rXfk22RoczaUnk6mRRT4pCCkbh1kRBpsn8RHC+NZWMfPVhisMnCmRSAHIqAWStyomv4FMZ89HiQRKJWS8hvawyqCdCPkC8q122Tw4ZrwC4Gv6FqssTwXHhYan4YjqNJOKAlb/0cITqnXQGaM5WmX/Cd4QeinXhUWN+GPY/jjGZxWGOq+bc7wA/0M4Hbayw4xiowaC3b8rw51/C46T7fXHg5pLBMC98x0U+HmNDcVrs7RY7sbO5bIU396/iDT0UVGhz/E+xf4)
+```vue
+<script setup>
+import { useForm } from 'vue-use-form'
+
+const { register, handleSubmit } = useForm({
+  defaultValues: {
+    firstName: '',
+    lastName: '',
+    category: '',
+    checkbox: [],
+    radio: ''
+  }
+})
+
+const onSubmit = (data) => {
+  console.log(data)
+}
+const onError = (errors) => {
+  console.log(errors)
+}
+</script>
+<template>
+  <form @submit.prevent="handleSubmit(onSubmit, onError)()">
+    <input :="register('firstName', { required: true })" placeholder="First name" />
+
+    <input :="register('lastName', { minLength: 2 })" placeholder="Last name" />
+
+    <select :="register('category')">
+      <option value="">Select...</option>
+      <option value="A">Category A</option>
+      <option value="B">Category B</option>
+    </select>
+
+    <input :="register('checkbox')" type="checkbox" value="A" />
+    <input :="register('checkbox')" type="checkbox" value="B" />
+    <input :="register('checkbox')" type="checkbox" value="C" />
+
+    <input :="register('radio')" type="radio" value="A" />
+    <input :="register('radio')" type="radio" value="B" />
+    <input :="register('radio')" type="radio" value="C" />
+
+    <input type="submit" />
+  </form>
+</template>
 ```
 

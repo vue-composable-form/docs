@@ -12,10 +12,6 @@ const defaultSidebar: DefaultTheme.Sidebar = [
     text: 'Introduction',
     items: [
       {
-        text: 'what is vue-use-form',
-        link: '../what-is',
-      },
-      {
         text: 'Getting Started',
         link: '../getting-started',
       },
@@ -31,6 +27,10 @@ const defaultSidebar: DefaultTheme.Sidebar = [
       {
         text: 'register',
         link: '../useForm/register',
+      },
+      {
+        text: 'unregister',
+        link: '../useForm/unregister',
       },
     ],
   },
@@ -52,20 +52,8 @@ const defaultSidebar: DefaultTheme.Sidebar = [
       },
     ],
   },
-  {
-    text: 'v-form',
-    items: [
-      {
-        text: 'v-form',
-        link: '../v-form/v-form',
-      },
-    ],
-  },
 ]
 
-const nav = [
-  ...defaultSidebar,
-]
 
 export default defineConfig({
   title: 'vue-use-form',
@@ -76,7 +64,13 @@ export default defineConfig({
     sidebar: {
       '/': defaultSidebar,
     },
-    nav,
+    nav: [
+      {
+        text: 'Playground',
+        link: 'https://vue-use-form-play.netlify.app/'
+      },
+      ...defaultSidebar,
+    ],
     socialLinks: [
       { icon: 'github', link: 'https://github.com/vue-use-form/vue-use-form' },
     ],
