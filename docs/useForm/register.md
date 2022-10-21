@@ -1,11 +1,11 @@
-# Register
+# register
 This method allows you to register **field** and **ref** to bind components for apply validation rules of vue-use-form.
 - **Type**
 
 ```ts
 type RegisterFn<T extends FiledValues, V = T[typeof name]> =
 (name: keyof T, options: RegisterOptions<T>) => {
-  [options.vModelBinding]: V,
+  [options.vModelBinding]: V
   [`onUpdate:${options.vModelBinding}`]: (input: V) => void
   value?: V
   onInput?: (e: InputEvent) => void
@@ -28,6 +28,9 @@ const {
   <input :="register('username')">
 </template>
 ```
+- **Playground**
+  
+Play register on [playground](https://vue-use-form-play.netlify.app/#eNpVj8FugzAMhl/FyoVWKnBHtNIue4Fdc8kq0zERx3LMpArx7nPomNqj8zvf/3lxY+QkWsfAzXdO5Dq3eALwf0H2roPtpbz9zFjPGeshSSyBd1+qnLu2fU5qnsK9IdRpHO5NYH5Jrca7Alw9re7k3pgby624z1cZWSGjzgxToNvZu2Jw8fSwgQUM824UWGGQFKF6RleePF0TZVssDYK3MSvKqQxl4UODot0DKJIkbwpw3pn9RhcK0XZojp8osF4OR099+1AzERsUo12oaBNAPxLPCp2p7nWHasdUx02+b/+/uPUX0JKCCA==)
 
 ## required
 A Boolean which, if true, indicates that the input must have a value before the form can be submitted. You can assign a string to return an error message in the errors object.
@@ -97,13 +100,17 @@ type max = number | { value: number; message: string }
 ```
 
 - **Usage**
-```ts
-register('count', {
-  max: {
-    value: 150,
-    message: 'The maximum value of count is 150!'
-  }
-})
+```html
+<input
+  type="number"
+  :="register('count', {
+    max: {
+      value: 150,
+      message: 'The maximum value of count is 150!'
+    },
+    valueAsNumber: true
+  })"
+/>
 ```
 ## min
 
@@ -115,19 +122,17 @@ type min = number | { value: number; message: string }
 ```
 
 - **Usage**
-```ts
-// number
-register('username', {
-  min: 3
-})
-
-// { value: number; message: string }
-register('username', {
-  min: {
-    value: 3,
-    message: 'The minimumlength of username is 3!'
-  }
-})
+```html
+<input
+  type="number"
+  :="register('count', {
+    min: {
+      value: 20,
+      message: 'The minimum value of count is 150!'
+    },
+    valueAsNumber: true
+  })"
+/>
 ```
 
 ## pattern
@@ -277,27 +282,34 @@ const onError = (errors) => {
   console.log(errors)
 }
 </script>
+
 <template>
   <form @submit.prevent="handleSubmit(onSubmit, onError)()">
-    <input :="register('firstName', { required: true })" placeholder="First name" />
+    <input :="register('firstName', { required: true })" placeholder="First name">
 
-    <input :="register('lastName', { minLength: 2 })" placeholder="Last name" />
+    <input :="register('lastName', { minLength: 2 })" placeholder="Last name">
 
     <select :="register('category')">
-      <option value="">Select...</option>
-      <option value="A">Category A</option>
-      <option value="B">Category B</option>
+      <option value="">
+        Select...
+      </option>
+      <option value="A">
+        Category A
+      </option>
+      <option value="B">
+        Category B
+      </option>
     </select>
 
-    <input :="register('checkbox')" type="checkbox" value="A" />
-    <input :="register('checkbox')" type="checkbox" value="B" />
-    <input :="register('checkbox')" type="checkbox" value="C" />
+    <input :="register('checkbox')" type="checkbox" value="A">
+    <input :="register('checkbox')" type="checkbox" value="B">
+    <input :="register('checkbox')" type="checkbox" value="C">
 
-    <input :="register('radio')" type="radio" value="A" />
-    <input :="register('radio')" type="radio" value="B" />
-    <input :="register('radio')" type="radio" value="C" />
+    <input :="register('radio')" type="radio" value="A">
+    <input :="register('radio')" type="radio" value="B">
+    <input :="register('radio')" type="radio" value="C">
 
-    <input type="submit" />
+    <input type="submit">
   </form>
 </template>
 ```

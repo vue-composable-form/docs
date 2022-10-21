@@ -10,36 +10,33 @@ generateFileSidebar(r('../useForm'))
 const defaultSidebar: DefaultTheme.Sidebar = [
   {
     text: 'Introduction',
+    collapsible: true,
     items: [
       {
         text: 'Getting Started',
-        link: '../getting-started',
+        link: '/getting-started',
       },
     ],
   },
   {
     text: 'useForm',
+    collapsible: true,
     items: [
       {
         text: 'useForm',
-        link: '../useForm/useForm',
+        link: '/useForm/useForm',
       },
       {
         text: 'register',
-        link: '../useForm/register',
+        link: '/useForm/register',
       },
       {
         text: 'unregister',
-        link: '../useForm/unregister',
+        link: '/useForm/unregister',
       },
-    ],
-  },
-  {
-    text: 'useFormState',
-    items: [
       {
-        text: 'useFormState',
-        link: '../useFormState/useFormState',
+        text: 'formState',
+        link: '/useForm/formState',
       },
     ],
   },
@@ -48,12 +45,11 @@ const defaultSidebar: DefaultTheme.Sidebar = [
     items: [
       {
         text: 'useFieldArray',
-        link: '../useFiledArray/useFiledArray',
+        link: '/useFiledArray/useFiledArray',
       },
     ],
   },
 ]
-
 
 export default defineConfig({
   title: 'vue-use-form',
@@ -61,13 +57,11 @@ export default defineConfig({
   // appearance: false,
   lastUpdated: true,
   themeConfig: {
-    sidebar: {
-      '/': defaultSidebar,
-    },
+    sidebar: defaultSidebar,
     nav: [
       {
         text: 'Playground',
-        link: 'https://vue-use-form-play.netlify.app/'
+        link: 'https://vue-use-form-play.netlify.app/',
       },
       ...defaultSidebar,
     ],

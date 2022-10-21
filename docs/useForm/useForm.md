@@ -1,7 +1,3 @@
----
-title: useForm
----
-
 # useForm
 
 useForm is a custom hook for managing forms with ease. It takes one object as optional argument.
@@ -21,8 +17,6 @@ interface UseFormProps<TFieldValues extends object> {
   defaultValues: DefaultValues<TFieldValues>
   resolver: Resolver<TFieldValues>
   shouldFocusError: boolean
-  shouldUnregister: boolean
-  shouldUseNativeValidation: boolean
   criteriaMode: CriteriaMode
   delayError: number
 }
@@ -153,4 +147,12 @@ const {
   <input :="register('email')">
   <input :="register('age')">
 </template>
+```
+
+## delayError
+This config will delay the error state to be displayed to the end-user in milliseconds. Correct the error input will remove the error instantly and delay will not be applied.
+
+- **Type**
+```ts
+const delayError: number = 0
 ```
