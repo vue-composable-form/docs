@@ -28,8 +28,16 @@ const {
   <input :="register('username')">
 </template>
 ```
+- **Details**
+
+`<input :="register()" />` is equal to `<input v-bind="register()"/>`
+
+```html
+<input :="register('username')">
+<input v-bind="register('username')">
+```
 - **Playground**
-  
+
 Play register on [playground](https://vue-use-form-play.netlify.app/#eNpVj8FugzAMhl/FyoVWKnBHtNIue4Fdc8kq0zERx3LMpArx7nPomNqj8zvf/3lxY+QkWsfAzXdO5Dq3eALwf0H2roPtpbz9zFjPGeshSSyBd1+qnLu2fU5qnsK9IdRpHO5NYH5Jrca7Alw9re7k3pgby624z1cZWSGjzgxToNvZu2Jw8fSwgQUM824UWGGQFKF6RleePF0TZVssDYK3MSvKqQxl4UODot0DKJIkbwpw3pn9RhcK0XZojp8osF4OR099+1AzERsUo12oaBNAPxLPCp2p7nWHasdUx02+b/+/uPUX0JKCCA==)
 
 ## required

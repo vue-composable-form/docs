@@ -38,6 +38,14 @@ const defaultSidebar: DefaultTheme.Sidebar = [
         text: 'formState',
         link: '/useForm/formState',
       },
+      {
+        text: 'handleSubmit',
+        link: '/useForm/handleSubmit',
+      },
+      {
+        text: 'reset',
+        link: '/useForm/reset',
+      },
     ],
   },
   {
