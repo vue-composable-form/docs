@@ -36,3 +36,11 @@ All errors will remain. This will not guarantee with further user actions.
 - keepDirty **`= false`**
   
 DirtyFields form state will remain, and isDirty will temporarily remain as the current state until further user's action.
+
+- keepValues **`= false`**
+
+Form input values will be unchanged.
+
+- keepDefaultValues **`= false`**
+
+Keep the same defaultValues which are initialized via useForm.

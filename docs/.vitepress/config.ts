@@ -46,6 +46,14 @@ const defaultSidebar: DefaultTheme.Sidebar = [
         text: 'reset',
         link: '/useForm/reset',
       },
+      {
+        text: 'setError',
+        link: '/useForm/setError',
+      },
+      {
+        text: 'clearErrors',
+        link: '/useForm/clearErrors',
+      },
     ],
   },
   {
