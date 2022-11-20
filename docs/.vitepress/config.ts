@@ -54,6 +54,10 @@ const defaultSidebar: DefaultTheme.Sidebar = [
         text: 'clearErrors',
         link: '/useForm/clearErrors',
       },
+      {
+        text: 'setValue',
+        link: '/useForm/setValue'
+      }
     ],
   },
   {
