@@ -66,6 +66,14 @@ const defaultSidebar: DefaultTheme.Sidebar = [
         text: 'getValues',
         link: '/useForm/getValues',
       },
+      {
+        text: 'getFieldState',
+        link: '/useForm/getFieldState',
+      },
+      {
+        text: 'trigger',
+        link: '/useForm/trigger',
+      },
     ],
   },
   {
