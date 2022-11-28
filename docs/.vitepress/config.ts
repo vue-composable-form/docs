@@ -56,8 +56,16 @@ const defaultSidebar: DefaultTheme.Sidebar = [
       },
       {
         text: 'setValue',
-        link: '/useForm/setValue'
-      }
+        link: '/useForm/setValue',
+      },
+      {
+        text: 'setFocus',
+        link: '/useForm/setFocus',
+      },
+      {
+        text: 'getValues',
+        link: '/useForm/getValues',
+      },
     ],
   },
   {
